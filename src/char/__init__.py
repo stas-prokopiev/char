@@ -1,11 +1,17 @@
-# -*- coding: utf-8 -*-
-from pkg_resources import get_distribution, DistributionNotFound
+# Standard library imports
+# Third party imports
 
-try:
-    # Change here if project is renamed and does not equal the package name
-    dist_name = __name__
-    __version__ = get_distribution(dist_name).version
-except DistributionNotFound:
-    __version__ = 'unknown'
-finally:
-    del get_distribution, DistributionNotFound
+# Local imports
+from cat.main import cat
+
+check_arguments_types = cat
+__all__ = ["cat", "check_arguments_types"]
+
+
+#####
+# Prepare basic logger in case user is not setting it itself.
+#####
+import logging
+LOGGER = logging.getLogger("check_arguments_types")
+LOGGER.addHandler(logging.NullHandler())
+
