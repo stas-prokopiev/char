@@ -138,6 +138,9 @@ Decorator arguments
 #. **dict_tuple_types_by_prefix_to_update_default**: dictionary, which prefices to add to the default ones
 #. **dict_tuple_types_by_prefix**: dictionary, which prefices to use instead of default ones
 
+| Your can use any combination of given arguments for the decorator.
+| For simplicity will be shown usage of every argument separately.
+
 Decorator argument **bool_is_to_skip_None_value**
 --------------------------------------------------------------------------------------------------
 

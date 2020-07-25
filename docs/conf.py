@@ -43,6 +43,7 @@ except FileNotFoundError:
 
 try:
     import sphinx
+    import sphinx_rtd_theme
     from pkg_resources import parse_version
 
     cmd_line_template = "sphinx-apidoc -f -o {outputdir} {moduledir}"
@@ -115,7 +116,7 @@ exclude_patterns = ['_build']
 
 # If true, the current module name will be prepended to all description
 # unit titles (such as .. function::).
-# add_module_names = True
+add_module_names = False
 
 # If true, sectionauthor and moduleauthor directives will be shown in the
 # output. They are ignored by default.
@@ -135,18 +136,18 @@ pygments_style = 'sphinx'
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-html_theme = 'alabaster'
+html_theme = 'sphinx_rtd_theme'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
-html_theme_options = {
-    'sidebar_width': '300px',
-    'page_width': '1200px'
-}
+# html_theme_options = {
+#     'sidebar_width': '300px',
+#     'page_width': '1200px'
+# }
 
 # Add any paths that contain custom themes here, relative to this directory.
-# html_theme_path = []
+html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
 
 # The name for this set of Sphinx documents.  If None, it defaults to
 # "<project> v<release> documentation".
@@ -176,7 +177,7 @@ html_static_path = ['_static']
 
 # If not '', a 'Last updated on:' timestamp is inserted at every page bottom,
 # using the given strftime format.
-# html_last_updated_fmt = '%b %d, %Y'
+html_last_updated_fmt = '%b %d, %Y'
 
 # If true, SmartyPants will be used to convert quotes and dashes to
 # typographically correct entities.
@@ -196,16 +197,16 @@ html_static_path = ['_static']
 # html_use_index = True
 
 # If true, the index is split into individual pages for each letter.
-# html_split_index = False
+html_split_index = True
 
 # If true, links to the reST sources are added to the pages.
 # html_show_sourcelink = True
 
 # If true, "Created using Sphinx" is shown in the HTML footer. Default is True.
-# html_show_sphinx = True
+html_show_sphinx = False
 
 # If true, "(C) Copyright ..." is shown in the HTML footer. Default is True.
-# html_show_copyright = True
+html_show_copyright = True
 
 # If true, an OpenSearch description file will be output, and all pages will
 # contain a <link> tag referring to it.  The value of this option must be the
