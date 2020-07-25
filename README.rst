@@ -2,18 +2,408 @@
 char
 ====
 
+.. image:: https://img.shields.io/github/last-commit/stas-prokopiev/char
+   :target: https://img.shields.io/github/last-commit/stas-prokopiev/char
+   :alt: GitHub last commit
 
-Add a short description here!
+.. image:: https://img.shields.io/github/license/stas-prokopiev/char
+    :target: https://github.com/stas-prokopiev/char/blob/master/LICENSE.txt
+    :alt: GitHub license<space><space>
+
+.. image:: https://readthedocs.org/projects/char/badge/?version=latest
+    :target: https://char.readthedocs.io/en/latest/?badge=latest
+    :alt: Documentation Status
+
+.. image:: https://travis-ci.org/stas-prokopiev/char.svg?branch=master
+    :target: https://travis-ci.org/stas-prokopiev/char
+
+.. image:: https://img.shields.io/pypi/v/char
+   :target: https://img.shields.io/pypi/v/char
+   :alt: PyPI
+
+.. image:: https://img.shields.io/pypi/pyversions/char
+   :target: https://img.shields.io/pypi/pyversions/char
+   :alt: PyPI - Python Version
 
 
-Description
-===========
+.. contents:: **Table of Contents**
 
-A longer description of your project goes here...
+Short Overview.
+=========================
+char stands for: check of arguments.
+
+It is a Python package(**py>=2.7 or py>=3.4**) with one decorator
+to check types of arguments in function in case if you use hungarian variable notation
+
+To check types of arguments which are given to the function just use:
+
+.. code-block:: python
+
+    @char
+    my_function(5, "hi", True)
+
+Installation
+============
+
+* Install via pip:
+
+.. code-block:: bash
+
+    pip install char
+
+Long Overview.
+=========================
+
+| This library gives to user ability to check types of function arguments via one decorator
+| if there are some agreements how to name variables with defined types
+
+The only import you can do from this package.
+
+.. code-block:: python
+
+    from char import char
+    # OR from char import check_types_of_arguments
+    # They are equivalent
 
 
-Note
-====
+Default prefices
+----------------------
 
-This project has been set up using PyScaffold 3.2.3. For details and usage
-information on PyScaffold see https://pyscaffold.org/.
+
+
+
+
+DICT_TUPLE_DEFAULT_TYPES_BY_PREFIX["str_"] = (str)
+
+DICT_TUPLE_DEFAULT_TYPES_BY_PREFIX["bytes_"] = (bytes)
+DICT_TUPLE_DEFAULT_TYPES_BY_PREFIX["bool_"] = (bool)
+DICT_TUPLE_DEFAULT_TYPES_BY_PREFIX["b_"] = (bool)
+DICT_TUPLE_DEFAULT_TYPES_BY_PREFIX["is_"] = (bool)
+DICT_TUPLE_DEFAULT_TYPES_BY_PREFIX["has_"] = (bool)
+DICT_TUPLE_DEFAULT_TYPES_BY_PREFIX["int_"] = (int)
+DICT_TUPLE_DEFAULT_TYPES_BY_PREFIX["i_"] = (int)
+DICT_TUPLE_DEFAULT_TYPES_BY_PREFIX["float_"] = (float)
+DICT_TUPLE_DEFAULT_TYPES_BY_PREFIX["f_"] = (float)
+DICT_TUPLE_DEFAULT_TYPES_BY_PREFIX["list_"] = (list)
+DICT_TUPLE_DEFAULT_TYPES_BY_PREFIX["l_"] = (list)
+DICT_TUPLE_DEFAULT_TYPES_BY_PREFIX["dict_"] = (dict)
+DICT_TUPLE_DEFAULT_TYPES_BY_PREFIX["d_"] = (dict)
+DICT_TUPLE_DEFAULT_TYPES_BY_PREFIX["set_"] = (set)
+DICT_TUPLE_DEFAULT_TYPES_BY_PREFIX["s_"] = (set)
+DICT_TUPLE_DEFAULT_TYPES_BY_PREFIX["tuple_"] = (tuple)
+DICT_TUPLE_DEFAULT_TYPES_BY_PREFIX["t_"] = (tuple)
+
+
+
+
+
+.. code-block:: python
+
+    from local_simple_database import class_local_simple_database
+    LSD = class_local_simple_database(path_to_dir_where_to_save_file)
+
+and then just use everywhere in your code **LSD["int_times_I_ve_eaten"]** like if it was usual dictionary.
+
+.. code-block:: python
+
+    LSD["int_times_I_ve_eaten"] += 1  # To increase value in the file
+    LSD["int_times_I_ve_eaten"]  # To get current value from the file
+
+| After running this code with:
+| *path_to_dir_where_to_save_file = "./folder_with_all_my_databases"*
+| Inside directory *./folder_with_all_my_databases*
+| will be created file *"int_times_I_ve_eaten.txt"* with current value.
+
+| Value is stored in a human-readable .txt file, so you can always access it.
+| To get it some time later or from another process just use:
+
+.. code-block:: python
+
+    int_value_I_was_afraid_to_lose = LSD["int_times_I_ve_eaten"]
+
+
+
+
+Basic usage.
+=========================
+
+1) class_local_simple_database
+--------------------------------------------------------------------------------------------------
+
+This class is built to handle (saving-retrieving) one value data like integer or float.
+
+For now supported types of databases are:
+
+- ["int", "float", "str", "datetime"] (Probably will be enhanced soon)
+- This means that one file with database can handle only type data
+
+Initialization of databases handler
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. code-block:: python
+
+    from local_simple_database import class_local_simple_database
+    LSD = class_local_simple_database(
+        str_path_database_dir=".",
+    )
+
+Arguments:
+
+1. **str_path_database_dir**:
+    | If the explicit path is not given or variable is not set at all,
+    | then will be used path "./local_database"
+    | Folder for database will be created automatically
+
+A few examples of Usage
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+After you've initialized LSD object you can use:
+
+1) Integer database
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+*If you want to store/access/modify simple int in file:*
+
+.. code-block:: python
+
+    # Process 1
+    LSD["int_red_cars_drove"] += 1
+    LSD["int_red_cars_drove"] += 2
+    # Oh now, last one was burgundy
+    LSD["int_red_cars_drove"] -= 1
+
+    # Process 2
+    print("red cars already found", LSD["int_red_cars_drove"])
+    # If there was no such DataBase yet, than in will be created and 0 value will be returned.
+    LSD["int_red_cars_drove"] = 5
+    print("Red cars already found: ", LSD["int_red_cars_drove"])
+
+2) Float database
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+.. code-block:: python
+
+    LSD["float_last_price_of_watermelons"] = 7.49
+    # Too many watermelons this year, need to apply 30% discount
+    LSD["float_last_price_of_watermelons"] *= 0.7
+    print(
+        "Hello my best customer, current price on watermelons is: ",
+        LSD["float_last_price_of_watermelons"]
+    )
+
+3) Datetime database
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+.. code-block:: python
+
+    import datetime
+    # Saving datetime in file in ISO format (E.G. 2020-05-16T18:00:41.780534)
+    LSD["datetime_now"] = datetime.datetime.now()
+
+    # Load datetime obj from DataBase
+    # if DB not found will be retunrs datetime for 1970-01-01
+    print("Hour was a moment ago: ", LSD["datetime_now"].hour)
+
+    # Use DataBase value to find timedelta
+    int_seconds_gone = (datetime.datetime.now() - LSD["datetime_now"]).seconds
+    print("Seconds gone: ", int_seconds_gone)
+
+4) Date database
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+Very similar to datetime database, but only date will by saved
+
+.. code-block:: python
+
+    import datetime
+    # Saving datetime in file in ISO format (E.G. 2020-05-16)
+    LSD["date_now"] = datetime.datetime.now()
+
+    # Load datetime obj from DataBase
+    # if DB not found will be retunrs datetime for 1970-01-01
+    print("Date today: ", LSD["date_now"])
+
+    # Use DataBase value to find timedelta
+    if datetime.datetime.now().date() == LSD["date_now"]:
+        int_seconds_gone_today = (datetime.datetime.now() - LSD["date_now"]).seconds
+        print("Seconds already gone: ", int_seconds_gone_today)
+
+2) class_local_dict_database
+--------------------------------------------------------------------------------------------------
+
+This class was built to handle (saving-retrieving) dictionary with data from a file.
+
+Work with such database is a little different from **class_local_simple_database** so it was necessary to put it in a separate class
+
+Initialization of databases handler
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. code-block:: python
+
+    from local_simple_database import class_local_dict_database
+    LSD = class_local_dict_database(
+        str_path_database_dir=".",
+        default_value=None,
+    )
+
+Arguments:
+
+#. **str_path_database_dir**:
+    | If the explicit path is not given or variable is not set at all,
+    | then will be used path "./local_database"
+    | Folder for databases will be created automatically
+#. **default_value**: value to use for any database if key in it is not found.
+    | LSD[database_name][key] = default_value
+
+A few examples of Usage
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+1) Basic store/access/modify data from a dict database.
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+.. code-block:: python
+
+    # Set methods
+    ## Set value for whole LSD:
+    LSD["dict_very_useful_heap"] = {"Mike": 50, "Stan": 1000000}
+
+    ## Set keys for one dictionary LSD
+    ## If there is no file with asked dict database then it will be created automatically
+    LSD["dict_useless_heap"]["random_key"] = 1
+    LSD["dict_useless_heap"]["random_key"] += 3
+    LSD["dict_useless_heap"][2] = ["Oh my God, what a list is doing here", "Aaa"]
+    LSD["dict_useless_heap"][99] = {"Are you serious?": {"You'd better be!": "Bbb"}}
+
+    # Get methods
+    ## To get whole dict for LSD, please use:
+    LSD["dict_useless_heap"].get_value()  # Sorry for that, I don't know how to do it without additional method
+
+    ## To get string representation of whole dict:
+    print(LSD["dict_useless_heap"])
+
+    ## To get one key from dict:
+    int_random_key = LSD["dict_useless_heap"]["random_key"]
+
+
+2) Set default value:
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+.. code-block:: python
+
+    # You can set the default value for all databases OR for only one:
+
+    ## 1) Set default value for any database when can't find key:
+    LSD.change_default_value(0)
+
+    ## 2) Set default value for one database:
+    LSD["cars"].change_default_value(0)
+
+    # They you can use LSD similarly to collections.defaultdict
+    LSD["cars"]["red"] += 1
+    # Oh no, that was burgundy once again
+    LSD["cars"]["red"] -= 1
+    LSD["cars"]["burgundy"] += 1
+
+
+Advanced usage (can be skipped, you already know enough to use it)
+===================================================================
+
+1) class database additional arguments
+--------------------------------------------------------------------------------------------------
+
+Both 2 main classes (**class_local_simple_database**, **class_local_dict_database**) have additional arguments:
+
+1) **str_datetime_template_for_rolling=""**
+
+    | This variable allows setting rolling save of database results using the DateTime template.
+    | If the value is not empty, then saving/retrieving results will be done from deeper folders with names satisfy the evaluation of the DateTime string template.
+    | E.G. To save daily results use "%Y%m%d" (Then deeper folder names will be like "20191230", "20191231", ...)
+    | E.G. To save hourly results use "%Y%m%d_%H" (Then deeper folder names will be like "20191230_0", "20191230_23", ...)
+
+2) **float_max_seconds_per_file_operation=0.01**
+
+    | This variable is necessary for multiprocessing safe work.
+    | It setting time in which LSD file accessed by process can't be accessed by any other process.
+    |    By default, it is set to 10 ms for simple database and 20 ms for dict database.
+    | If you use operations which from accessing value till setting new value needs more time, you are more than welcome to increase it.
+    | You can set it to 0.0 if you are not using threads-processes and want the maximum speed.
+
+
+.. code-block:: python
+
+    # Full definition of class_local_simple_database
+    LSD = class_local_simple_database(
+        str_path_database_dir=".",
+        float_max_seconds_per_file_operation=0.05,
+        str_datetime_template_for_rolling=""
+    )
+
+.. code-block:: python
+
+    # Full definition of class_local_dict_database
+    LSD = class_local_dict_database(
+        str_path_database_dir=".",
+        default_value=None,
+        float_max_seconds_per_file_operation=0.05,
+        str_datetime_template_for_rolling=""
+    )
+
+2) Rolling example
+--------------------------------------------------------------------------------------------------
+
+.. code-block:: python
+
+    LSD_daily_rolling = class_local_simple_database(
+        str_path_database_dir=".",
+        str_datetime_template_for_rolling="%Y%m%d"
+    )
+
+3) Get values for ALL databases in the directory.
+--------------------------------------------------------------------------------------------------
+
+To get a dictionary with data in all databases by database name, use:
+
+.. code-block:: python
+
+    LSD.get_dict_DBs_data_by_DB_name()
+
+If you were using rolling, then you can get dictionary with results like {"datetime_1": dict_all_DBs_date_1, }
+
+.. code-block:: python
+
+    LSD.get_dict_every_DB_by_datetime()
+
+
+If you were using rolling, and interested only in one database. {"datetime_1": database_value_1, ...}
+
+.. code-block:: python
+
+    # Please replace *str_database_name* on name of LSD which values you want to get
+    LSD.get_one_DB_data_daily(
+        str_database_name,
+        value_to_use_if_DB_not_found=None
+    )
+
+Links
+=====
+
+    * `PYPI <https://pypi.org/project/char/>`_
+    * `readthedocs <https://char.readthedocs.io/en/latest/>`_
+    * `GitHub <https://github.com/stas-prokopiev/char>`_
+
+Project local Links
+===================
+
+    * `CHANGELOG <https://github.com/stas-prokopiev/char/blob/master/CHANGELOG.rst>`_.
+    * `CONTRIBUTING <https://github.com/stas-prokopiev/char/blob/master/CONTRIBUTING.rst>`_.
+
+Contacts
+========
+
+    * Email: stas.prokopiev@gmail.com
+    * `vk.com <https://vk.com/stas.prokopyev>`_
+    * `Facebook <https://www.facebook.com/profile.php?id=100009380530321>`_
+
+License
+=======
+
+This project is licensed under the MIT License.
+

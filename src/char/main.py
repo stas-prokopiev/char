@@ -70,7 +70,7 @@ def check_type_of_1_argument(
         "---> With type: " + str(type(argument_value)) + "\n" +
         "---> Instead of: " + str(tuple_types_var_can_be)
     )
-    raise TypeError(str_error_message)
+    raise ArgumentTypeError(str_error_message)
 
 
 def char(
@@ -101,10 +101,15 @@ def char(
     Returns:
         function: Decorator without arguments
     """
+    # Process additional arguments
     if dict_tuple_types_by_prefix is None:
         dict_tuple_types_by_prefix_local = DICT_TUPLE_DEFAULT_TYPES_BY_PREFIX
     else:
         dict_tuple_types_by_prefix_local = dict_tuple_types_by_prefix
+    if dict_tuple_types_by_prefix_to_update_default is not None:
+        dict_tuple_types_by_prefix_local.update(
+            dict_tuple_types_by_prefix_to_update_default)
+
 
     def cfa_with_args(func_to_check):
         """Main decorator without arguments
