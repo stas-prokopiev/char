@@ -28,359 +28,159 @@ char
 
 .. contents:: **Table of Contents**
 
-Short Overview.
+Overview.
 =========================
 char stands for: check of arguments.
 
-It is a Python package(**py>=2.7 or py>=3.4**) with one decorator
-to check types of arguments in function in case if you use hungarian variable notation
+| This library gives to user ability to check types of function arguments via one decorator
+| if your team have some agreements how to name variables with defined types
+| Or if you are ready to use mine (they will be described bellow)
+| This can prevent many errors
 
-To check types of arguments which are given to the function just use:
+Example
+------------------------------
+
+| Let's say that you defined a function **func(int_x)** and you want to check
+| if value that is given to variable **int_x** has type int
+| Usually you would have to check it yourself somehow like this: **isinstance(int_x, int)**
+| But with this decorator this can be done for you automatically.
+| And if type of given value is wrong, then you'll get a nice exception with description
 
 .. code-block:: python
 
+    from char import char
+    # OR from char import check_types_of_arguments  # They are equivalent
+
     @char
-    my_function(5, "hi", True)
+    def func(int_x):
+        pass
 
-Installation
-============
 
-* Install via pip:
+| If you try to call function with wrong types of arguments: **func("pewpew")**
+| you'll get an error like this:
+
+.. code-block:: bash
+
+    ArgumentTypeError: Incorrect type of variable was given to function: func
+    ---> For variable: int_x
+    ---> Were given value: pewpew
+    ---> With type: <class 'str'>
+    ---> Instead of: <class 'int'>
+
+Installation via pip:
+======================
 
 .. code-block:: bash
 
     pip install char
 
-Long Overview.
-=========================
+Usage with default settings
+============================
 
-| This library gives to user ability to check types of function arguments via one decorator
-| if there are some agreements how to name variables with defined types
+Default prefices
+------------------------------
+**Here will be a list of name prefices and which type the variable is expected to be**
 
-The only import you can do from this package.
+If prefix of variable name doesn't satisfy any of the given, then variable won't be checked.
+
+#. "any_" -  object
+#. "bool_" -  bool
+#. "b_" -  bool
+#. "is_" -  bool
+#. "has_" -  bool
+#. "str_" -  str
+#. "bytes_" -  bytes
+#. "int_" -  int
+#. "i_" -  int
+#. "float_" -  float
+#. "f_" -  float
+#. "list_" -  list
+#. "l_" -  list
+#. "dict_" -  dict
+#. "d_" -  dict
+#. "set_" -  set
+#. "tuple_" -  tuple
+#. "t_" -  tuple
+
+Example
+------------------------------
 
 .. code-block:: python
 
     from char import char
-    # OR from char import check_types_of_arguments
-    # They are equivalent
 
-
-Default prefices
-----------------------
-
-
-
-
-
-DICT_TUPLE_DEFAULT_TYPES_BY_PREFIX["str_"] = (str)
-
-DICT_TUPLE_DEFAULT_TYPES_BY_PREFIX["bytes_"] = (bytes)
-DICT_TUPLE_DEFAULT_TYPES_BY_PREFIX["bool_"] = (bool)
-DICT_TUPLE_DEFAULT_TYPES_BY_PREFIX["b_"] = (bool)
-DICT_TUPLE_DEFAULT_TYPES_BY_PREFIX["is_"] = (bool)
-DICT_TUPLE_DEFAULT_TYPES_BY_PREFIX["has_"] = (bool)
-DICT_TUPLE_DEFAULT_TYPES_BY_PREFIX["int_"] = (int)
-DICT_TUPLE_DEFAULT_TYPES_BY_PREFIX["i_"] = (int)
-DICT_TUPLE_DEFAULT_TYPES_BY_PREFIX["float_"] = (float)
-DICT_TUPLE_DEFAULT_TYPES_BY_PREFIX["f_"] = (float)
-DICT_TUPLE_DEFAULT_TYPES_BY_PREFIX["list_"] = (list)
-DICT_TUPLE_DEFAULT_TYPES_BY_PREFIX["l_"] = (list)
-DICT_TUPLE_DEFAULT_TYPES_BY_PREFIX["dict_"] = (dict)
-DICT_TUPLE_DEFAULT_TYPES_BY_PREFIX["d_"] = (dict)
-DICT_TUPLE_DEFAULT_TYPES_BY_PREFIX["set_"] = (set)
-DICT_TUPLE_DEFAULT_TYPES_BY_PREFIX["s_"] = (set)
-DICT_TUPLE_DEFAULT_TYPES_BY_PREFIX["tuple_"] = (tuple)
-DICT_TUPLE_DEFAULT_TYPES_BY_PREFIX["t_"] = (tuple)
-
-
-
-
-
-.. code-block:: python
-
-    from local_simple_database import class_local_simple_database
-    LSD = class_local_simple_database(path_to_dir_where_to_save_file)
-
-and then just use everywhere in your code **LSD["int_times_I_ve_eaten"]** like if it was usual dictionary.
-
-.. code-block:: python
-
-    LSD["int_times_I_ve_eaten"] += 1  # To increase value in the file
-    LSD["int_times_I_ve_eaten"]  # To get current value from the file
-
-| After running this code with:
-| *path_to_dir_where_to_save_file = "./folder_with_all_my_databases"*
-| Inside directory *./folder_with_all_my_databases*
-| will be created file *"int_times_I_ve_eaten.txt"* with current value.
-
-| Value is stored in a human-readable .txt file, so you can always access it.
-| To get it some time later or from another process just use:
-
-.. code-block:: python
-
-    int_value_I_was_afraid_to_lose = LSD["int_times_I_ve_eaten"]
-
-
-
-
-Basic usage.
-=========================
-
-1) class_local_simple_database
---------------------------------------------------------------------------------------------------
-
-This class is built to handle (saving-retrieving) one value data like integer or float.
-
-For now supported types of databases are:
-
-- ["int", "float", "str", "datetime"] (Probably will be enhanced soon)
-- This means that one file with database can handle only type data
-
-Initialization of databases handler
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-.. code-block:: python
-
-    from local_simple_database import class_local_simple_database
-    LSD = class_local_simple_database(
-        str_path_database_dir=".",
-    )
-
-Arguments:
-
-1. **str_path_database_dir**:
-    | If the explicit path is not given or variable is not set at all,
-    | then will be used path "./local_database"
-    | Folder for database will be created automatically
-
-A few examples of Usage
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-After you've initialized LSD object you can use:
-
-1) Integer database
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-*If you want to store/access/modify simple int in file:*
-
-.. code-block:: python
-
-    # Process 1
-    LSD["int_red_cars_drove"] += 1
-    LSD["int_red_cars_drove"] += 2
-    # Oh now, last one was burgundy
-    LSD["int_red_cars_drove"] -= 1
-
-    # Process 2
-    print("red cars already found", LSD["int_red_cars_drove"])
-    # If there was no such DataBase yet, than in will be created and 0 value will be returned.
-    LSD["int_red_cars_drove"] = 5
-    print("Red cars already found: ", LSD["int_red_cars_drove"])
-
-2) Float database
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-.. code-block:: python
-
-    LSD["float_last_price_of_watermelons"] = 7.49
-    # Too many watermelons this year, need to apply 30% discount
-    LSD["float_last_price_of_watermelons"] *= 0.7
-    print(
-        "Hello my best customer, current price on watermelons is: ",
-        LSD["float_last_price_of_watermelons"]
-    )
-
-3) Datetime database
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-.. code-block:: python
-
-    import datetime
-    # Saving datetime in file in ISO format (E.G. 2020-05-16T18:00:41.780534)
-    LSD["datetime_now"] = datetime.datetime.now()
-
-    # Load datetime obj from DataBase
-    # if DB not found will be retunrs datetime for 1970-01-01
-    print("Hour was a moment ago: ", LSD["datetime_now"].hour)
-
-    # Use DataBase value to find timedelta
-    int_seconds_gone = (datetime.datetime.now() - LSD["datetime_now"]).seconds
-    print("Seconds gone: ", int_seconds_gone)
-
-4) Date database
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-Very similar to datetime database, but only date will by saved
-
-.. code-block:: python
-
-    import datetime
-    # Saving datetime in file in ISO format (E.G. 2020-05-16)
-    LSD["date_now"] = datetime.datetime.now()
-
-    # Load datetime obj from DataBase
-    # if DB not found will be retunrs datetime for 1970-01-01
-    print("Date today: ", LSD["date_now"])
-
-    # Use DataBase value to find timedelta
-    if datetime.datetime.now().date() == LSD["date_now"]:
-        int_seconds_gone_today = (datetime.datetime.now() - LSD["date_now"]).seconds
-        print("Seconds already gone: ", int_seconds_gone_today)
-
-2) class_local_dict_database
---------------------------------------------------------------------------------------------------
-
-This class was built to handle (saving-retrieving) dictionary with data from a file.
-
-Work with such database is a little different from **class_local_simple_database** so it was necessary to put it in a separate class
-
-Initialization of databases handler
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-.. code-block:: python
-
-    from local_simple_database import class_local_dict_database
-    LSD = class_local_dict_database(
-        str_path_database_dir=".",
-        default_value=None,
-    )
-
-Arguments:
-
-#. **str_path_database_dir**:
-    | If the explicit path is not given or variable is not set at all,
-    | then will be used path "./local_database"
-    | Folder for databases will be created automatically
-#. **default_value**: value to use for any database if key in it is not found.
-    | LSD[database_name][key] = default_value
-
-A few examples of Usage
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-1) Basic store/access/modify data from a dict database.
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-.. code-block:: python
-
-    # Set methods
-    ## Set value for whole LSD:
-    LSD["dict_very_useful_heap"] = {"Mike": 50, "Stan": 1000000}
-
-    ## Set keys for one dictionary LSD
-    ## If there is no file with asked dict database then it will be created automatically
-    LSD["dict_useless_heap"]["random_key"] = 1
-    LSD["dict_useless_heap"]["random_key"] += 3
-    LSD["dict_useless_heap"][2] = ["Oh my God, what a list is doing here", "Aaa"]
-    LSD["dict_useless_heap"][99] = {"Are you serious?": {"You'd better be!": "Bbb"}}
-
-    # Get methods
-    ## To get whole dict for LSD, please use:
-    LSD["dict_useless_heap"].get_value()  # Sorry for that, I don't know how to do it without additional method
-
-    ## To get string representation of whole dict:
-    print(LSD["dict_useless_heap"])
-
-    ## To get one key from dict:
-    int_random_key = LSD["dict_useless_heap"]["random_key"]
-
-
-2) Set default value:
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-.. code-block:: python
-
-    # You can set the default value for all databases OR for only one:
-
-    ## 1) Set default value for any database when can't find key:
-    LSD.change_default_value(0)
-
-    ## 2) Set default value for one database:
-    LSD["cars"].change_default_value(0)
-
-    # They you can use LSD similarly to collections.defaultdict
-    LSD["cars"]["red"] += 1
-    # Oh no, that was burgundy once again
-    LSD["cars"]["red"] -= 1
-    LSD["cars"]["burgundy"] += 1
-
-
-Advanced usage (can be skipped, you already know enough to use it)
+    @char
+    def oh_my_god(
+            int_arg,
+            float_arg,
+            list_arg,
+            undef_arg,
+            d_kwarg=None,
+            i_kwarg=0,
+            is_kwarg=False
+    ):
+        pass
+
+    oh_my_god(0, 0.0, [], 1)  # Will PASS
+    oh_my_god(0, 0.0, None, "text")  # Will PASS
+    oh_my_god(0, 0.0, {}, "text")  # Will FAIL and raise an ArgumentTypeError
+    oh_my_god(0, 0.0, [], Exception, d_kwarg={0: 1})  # Will PASS
+    oh_my_god(0, 0.0, [], object, is_kwarg=0)  # Will FAIL and raise an ArgumentTypeError
+
+
+Usage with user defined settings
 ===================================================================
 
-1) class database additional arguments
+Decorator arguments
 --------------------------------------------------------------------------------------------------
 
-Both 2 main classes (**class_local_simple_database**, **class_local_dict_database**) have additional arguments:
+#. **bool_is_to_skip_None_value=True**: Flag what to do with None values, by default None values won't be checked.
+#. **dict_tuple_types_by_prefix_to_update_default**: dictionary, which prefices to add to the default ones
+#. **dict_tuple_types_by_prefix**: dictionary, which prefices to use instead of default ones
 
-1) **str_datetime_template_for_rolling=""**
-
-    | This variable allows setting rolling save of database results using the DateTime template.
-    | If the value is not empty, then saving/retrieving results will be done from deeper folders with names satisfy the evaluation of the DateTime string template.
-    | E.G. To save daily results use "%Y%m%d" (Then deeper folder names will be like "20191230", "20191231", ...)
-    | E.G. To save hourly results use "%Y%m%d_%H" (Then deeper folder names will be like "20191230_0", "20191230_23", ...)
-
-2) **float_max_seconds_per_file_operation=0.01**
-
-    | This variable is necessary for multiprocessing safe work.
-    | It setting time in which LSD file accessed by process can't be accessed by any other process.
-    |    By default, it is set to 10 ms for simple database and 20 ms for dict database.
-    | If you use operations which from accessing value till setting new value needs more time, you are more than welcome to increase it.
-    | You can set it to 0.0 if you are not using threads-processes and want the maximum speed.
-
-
-.. code-block:: python
-
-    # Full definition of class_local_simple_database
-    LSD = class_local_simple_database(
-        str_path_database_dir=".",
-        float_max_seconds_per_file_operation=0.05,
-        str_datetime_template_for_rolling=""
-    )
-
-.. code-block:: python
-
-    # Full definition of class_local_dict_database
-    LSD = class_local_dict_database(
-        str_path_database_dir=".",
-        default_value=None,
-        float_max_seconds_per_file_operation=0.05,
-        str_datetime_template_for_rolling=""
-    )
-
-2) Rolling example
+Decorator argument **bool_is_to_skip_None_value**
 --------------------------------------------------------------------------------------------------
 
 .. code-block:: python
 
-    LSD_daily_rolling = class_local_simple_database(
-        str_path_database_dir=".",
-        str_datetime_template_for_rolling="%Y%m%d"
-    )
+    @char
+    def func_with_default_decorator(dict_x):
+        pass
 
-3) Get values for ALL databases in the directory.
+    @char(bool_is_to_skip_None_value=False)
+    def func_with_custom_decorator(dict_x):
+        pass
+
+    func_with_default_decorator(None)  # Will PASS
+    func_with_custom_decorator(None)  # Will FAIL and raise an ArgumentTypeError
+
+
+Decorator argument **dict_tuple_types_by_prefix_to_update_default**
 --------------------------------------------------------------------------------------------------
 
-To get a dictionary with data in all databases by database name, use:
+.. code-block:: python
+
+    @char(dict_tuple_types_by_prefix_to_update_default={"num_": (int, float, bool)})
+    def very_complex_function(num_x, str_y=""):
+        pass
+
+    very_complex_function(0, "hihi")  # Will PASS
+    very_complex_function(0.5, "heyhey")  # Will PASS
+    very_complex_function(True)  # Will PASS
+    very_complex_function("True")  # Will FAIL and raise an ArgumentTypeError
+
+Decorator argument **dict_tuple_types_by_prefix**
+--------------------------------------------------------------------------------------------------
 
 .. code-block:: python
 
-    LSD.get_dict_DBs_data_by_DB_name()
+    @char(dict_tuple_types_by_prefix={"exception": (BaseException)})
+    def function_with_only_one_check(int_x, exception_y=None):
+        pass
 
-If you were using rolling, then you can get dictionary with results like {"datetime_1": dict_all_DBs_date_1, }
-
-.. code-block:: python
-
-    LSD.get_dict_every_DB_by_datetime()
-
-
-If you were using rolling, and interested only in one database. {"datetime_1": database_value_1, ...}
-
-.. code-block:: python
-
-    # Please replace *str_database_name* on name of LSD which values you want to get
-    LSD.get_one_DB_data_daily(
-        str_database_name,
-        value_to_use_if_DB_not_found=None
-    )
+    function_with_only_one_check(0, Exception)  # Will PASS
+    function_with_only_one_check(0.5, TypeError)  # Will PASS because first variable won't be checked
+    function_with_only_one_check(0.5, "ERROR")  # Will FAIL and raise an ArgumentTypeError
 
 Links
 =====

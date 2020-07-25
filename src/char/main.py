@@ -19,6 +19,7 @@ if sys.version_info[0] == 2:
 else:
     DICT_TUPLE_DEFAULT_TYPES_BY_PREFIX["str_"] = (str)
 #####
+DICT_TUPLE_DEFAULT_TYPES_BY_PREFIX["any_"] = (object)
 DICT_TUPLE_DEFAULT_TYPES_BY_PREFIX["bytes_"] = (bytes)
 DICT_TUPLE_DEFAULT_TYPES_BY_PREFIX["bool_"] = (bool)
 DICT_TUPLE_DEFAULT_TYPES_BY_PREFIX["b_"] = (bool)
