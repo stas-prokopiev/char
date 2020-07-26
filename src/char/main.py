@@ -1,6 +1,7 @@
 # Standard library imports
 import sys
 import logging
+from functools import wraps
 # Third party imports
 
 # Local imports
@@ -125,7 +126,7 @@ def char(
         list_function_arguments = \
             func_to_check.__code__.co_varnames[:int_args_count]
         str_function_name = func_to_check.__name__
-
+        @wraps(func_to_check)
         def wrapper(*args, **kwargs):
             """wrapper for decorated function
 
