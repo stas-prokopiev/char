@@ -32,10 +32,11 @@ Overview.
 =========================
 char stands for: check of arguments.
 
-| This library gives to user ability to check types of function arguments via one decorator
-| if your team have some agreements how to name variables with defined types
+This library gives to user ability to check types of function arguments via one decorator.
+
+| If your team or you have some agreements how to name variables with defined types
 | Or if you are ready to use mine (they will be described bellow)
-| This can prevent many errors
+| then type checking will be simple and pleasant.
 
 Example
 ------------------------------
@@ -44,7 +45,6 @@ Example
 | if value that is given to variable **int_x** has type int
 | Usually you would have to check it yourself somehow like this: **isinstance(int_x, int)**
 | But with this decorator this can be done for you automatically.
-| And if type of given value is wrong, then you'll get a nice exception with description
 
 .. code-block:: python
 
@@ -57,7 +57,7 @@ Example
 
 
 | If you try to call function with wrong types of arguments: **func("pewpew")**
-| you'll get an error like this:
+| then you'll get a nice exception with description:
 
 .. code-block:: bash
 
@@ -77,11 +77,11 @@ Installation via pip:
 Usage with default settings
 ============================
 
-Default prefices
+Default prefixes
 ------------------------------
-**Here will be a list of name prefices and which type the variable is expected to be**
+**Here will be a list of name prefixes and which type the variable is expected to be**
 
-If prefix of variable name doesn't satisfy any of the given, then variable won't be checked.
+If variable name doesn't start with ony of the given  prefixes then variable type won't be checked.
 
 #. "any_" -  object
 #. "bool_" -  bool
@@ -135,13 +135,13 @@ Decorator arguments
 --------------------------------------------------------------------------------------------------
 
 #. **bool_is_to_skip_None_value=True**: Flag what to do with None values, by default None values won't be checked.
-#. **dict_tuple_types_by_prefix_to_update_default**: dictionary, which prefices to add to the default ones
-#. **dict_tuple_types_by_prefix**: dictionary, which prefices to use instead of default ones
+#. **dict_tuple_types_by_prefix_to_update_default**: dictionary, which prefixes to add to the default ones
+#. **dict_tuple_types_by_prefix**: dictionary, which prefixes to use instead of default ones
 
 | Your can use any combination of given arguments for the decorator.
 | For simplicity will be shown usage of every argument separately.
 
-Decorator argument **bool_is_to_skip_None_value**
+Decorator argument: **bool_is_to_skip_None_value**
 --------------------------------------------------------------------------------------------------
 
 .. code-block:: python
@@ -158,7 +158,7 @@ Decorator argument **bool_is_to_skip_None_value**
     func_with_custom_decorator(None)  # Will FAIL and raise an ArgumentTypeError
 
 
-Decorator argument **dict_tuple_types_by_prefix_to_update_default**
+Decorator argument: **dict_tuple_types_by_prefix_to_update_default**
 --------------------------------------------------------------------------------------------------
 
 .. code-block:: python
@@ -172,7 +172,7 @@ Decorator argument **dict_tuple_types_by_prefix_to_update_default**
     very_complex_function(True)  # Will PASS
     very_complex_function("True")  # Will FAIL and raise an ArgumentTypeError
 
-Decorator argument **dict_tuple_types_by_prefix**
+Decorator argument: **dict_tuple_types_by_prefix**
 --------------------------------------------------------------------------------------------------
 
 .. code-block:: python
