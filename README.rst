@@ -83,24 +83,24 @@ Default prefixes
 
 If variable name doesn't start with ony of the given  prefixes then variable type won't be checked.
 
-#. "any_" -  object
-#. "bool_" -  bool
-#. "b_" -  bool
-#. "is_" -  bool
-#. "has_" -  bool
-#. "str_" -  str
-#. "bytes_" -  bytes
-#. "int_" -  int
-#. "i_" -  int
-#. "float_" -  float
-#. "f_" -  float
-#. "list_" -  list
-#. "l_" -  list
-#. "dict_" -  dict
-#. "d_" -  dict
-#. "set_" -  set
-#. "tuple_" -  tuple
-#. "t_" -  tuple
+#. "any\_" -  object
+#. "bool\_" -  bool
+#. "b\_" -  bool
+#. "is\_" -  bool
+#. "has\_" -  bool
+#. "str\_" -  str
+#. "bytes\_" -  bytes
+#. "int\_" -  int
+#. "i\_" -  int
+#. "float\_" -  float
+#. "f\_" -  float
+#. "list\_" -  list
+#. "l\_" -  list
+#. "dict\_" -  dict
+#. "d\_" -  dict
+#. "set\_" -  set
+#. "tuple\_" -  tuple
+#. "t\_" -  tuple
 
 Example
 ------------------------------
