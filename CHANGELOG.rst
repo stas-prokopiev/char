@@ -2,6 +2,12 @@
 Changelog
 =========
 
+Version 0.1.1
+==============
+
+- Updated docs
+- Improved the code style of the python files
+
 Version 0.1
 ===========
 

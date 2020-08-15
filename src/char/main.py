@@ -1,3 +1,7 @@
+"""
+This is one and only file with working code in the whole package
+"""
+
 # Standard library imports
 import sys
 import logging
@@ -42,6 +46,11 @@ DICT_TUPLE_DEFAULT_TYPES_BY_PREFIX["t_"] = (tuple)
 
 
 class ArgumentTypeError(TypeError):
+    """Error that type of argument is incorrect
+
+    Args:
+        TypeError (Exception): Wrong type of argument was given to function
+    """
     pass
 
 
@@ -79,7 +88,7 @@ def char(
         function=None,
         dict_tuple_types_by_prefix=None,
         dict_tuple_types_by_prefix_to_update_default=None,
-        bool_is_to_skip_None_value=True,
+        bool_is_to_skip_none_value=True,
 ):
     """Decorator for checking types of arguments in function
 
@@ -97,7 +106,7 @@ def char(
             Rules how to check types. Defaults to None.
         dict_tuple_types_by_prefix_to_update_default (dict, optional):
             Additional to default Rules how to check types. Defaults to None.
-        bool_is_to_skip_None_value (bool, optional):
+        bool_is_to_skip_none_value (bool, optional):
             Flag what to do with None values. Defaults to True.
 
     Returns:
@@ -145,7 +154,7 @@ def char(
             for str_argument_name, argument_value in list_tuples_to_iterate:
                 LOGGER.debug("Checking type of argument: %s", str_argument_name)
                 # By default if value is None then leave this argument alone
-                if argument_value is None and bool_is_to_skip_None_value:
+                if argument_value is None and bool_is_to_skip_none_value:
                     continue
                 for str_prefix in dict_tuple_types_by_prefix_local:
                     if str_argument_name.startswith(str_prefix):
@@ -162,4 +171,3 @@ def char(
     if function:
         return cfa_with_args(function)
     return cfa_with_args
-

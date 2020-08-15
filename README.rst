@@ -35,16 +35,19 @@ char stands for: check of arguments.
 This library gives to user ability to check types of function arguments via one decorator.
 
 | If your team or you have some agreements how to name variables with defined types
-| Or if you are ready to use mine (they will be described bellow)
-| then type checking will be simple and pleasant.
+| Or if you are ready to use mine (which is derived from Hungarian notation (it will be described bellow))
+| then type checking will be *simple* and **pleasant**.
+
+P.S. I like to use variables notation because it really improves readability of the code.
 
 Example
 ------------------------------
 
-| Let's say that you defined a function **func(int_x)** and you want to check
+| Let's say that you've defined a function **func(int_x)** and you want to check
 | if value that is given to variable **int_x** has type int
-| Usually you would have to check it yourself somehow like this: **isinstance(int_x, int)**
-| But with this decorator this can be done for you automatically.
+| Usually you would have to check it by adding one more line at the start of the function
+| somehow like this: **isinstance(int_x, int)**
+| With this decorator this can be done for you automatically.
 
 .. code-block:: python
 
@@ -56,7 +59,7 @@ Example
         pass
 
 
-| If you try to call function with wrong types of arguments: **func("pewpew")**
+| If you try to call function with wrong types of arguments like: **func("pewpew")**
 | then you'll get a nice exception with description:
 
 .. code-block:: bash
@@ -66,6 +69,18 @@ Example
     ---> Were given value: pewpew
     ---> With type: <class 'str'>
     ---> Instead of: <class 'int'>
+
+Differences from python type hinting
+===================================================================
+
+| The main difference from the internal python type hinting is that type hinting do static analysis of the code
+| and do not do any checks during the runtime.
+| So actually it can't protect a user from giving to some type hinted function arguments with the wrong types
+| so even with type hinting you still have to write isinstance type checks.
+
+Additional difference is that this package supports python >=2.7 when type hinting is available only since python 3.5
+
+| In case if you don't want to use any notation of variables and want to use the type hinting then you can try the library **typeguard**.
 
 Installation via pip:
 ======================
