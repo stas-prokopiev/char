@@ -80,7 +80,7 @@ Differences from python type hinting
 
 Additional difference is that this package supports python >=2.7 when type hinting is available only since python 3.5
 
-| In case if you don't want to use any notation of variables and want to use the type hinting then you can try the library **typeguard**.
+In case if you don't want to use any notation of variables and want to use the type hinting then you can try the library **typeguard**.
 
 Installation via pip:
 ======================

@@ -14,7 +14,7 @@ def test_dec_with_arguments():
         dict_tuple_types_by_prefix_to_update_default)
     def test_func_2(list_x, dict_y, set_z, wow2):
         pass
-    @char(bool_is_to_skip_None_value=False)
+    @char(bool_is_to_skip_none_value=False)
     def test_func_3(is_y, has_y, bool_z):
         pass
     #####

@@ -15,5 +15,12 @@ __all__ = ["char", "check_arguments", "check_types_of_arguments"]
 #####
 import logging
 LOGGER = logging.getLogger("check_types_of_arguments")
-LOGGER.addHandler(logging.NullHandler())
+LOGGER.propagate = False
+LOGGER.setLevel(level=logging.WARNING)  # Or any level you see suitable now
+
+stdout_handler = logging.StreamHandler()
+stdout_handler.setFormatter(
+    logging.Formatter("%(asctime)s - [%(levelname)s]: %(message)s"))
+LOGGER.addHandler(stdout_handler)
+
 
